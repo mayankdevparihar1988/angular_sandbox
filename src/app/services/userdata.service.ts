@@ -39,4 +39,8 @@ export class UserdataService {
   getUsers(): User[] {
     return this.users;
   }
+
+  addUser(user: User) {
+    this.users.unshift(user);
+  }
 }

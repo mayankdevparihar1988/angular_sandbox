@@ -43,9 +43,7 @@ export class UsersComponent implements OnInit {
   //   }
   // }
 
-  addUser(user: User) {
-    this.users.unshift(user);
-  }
+
 
   onSubmit({value, valid}: {value: User, valid: boolean}) {
     if(!valid){
@@ -55,7 +53,7 @@ export class UsersComponent implements OnInit {
       value.registered = new Date();
       value.hide = true;
 
-      this.addUser(value);
+      this.userDataService.addUser(value);
 
       this.form.reset();
     }
