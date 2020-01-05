@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from '../models/Post';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable({
@@ -24,9 +24,22 @@ export class PostService {
     return this.http.get<Post[]>(this.postUrl);
   }
 
- savePost(post: Post): Observable<Post> {
+  savePost(post: Post): Observable<Post> {
 
-  return this.http.post<Post>(this.postUrl, post, httpOptions);
- }
+    return this.http.post<Post>(this.postUrl, post, httpOptions);
+  }
+
+  updatePost(post: Post): Observable<Post> {
+
+    const url = `${this.postUrl}/${post.id}`;
+
+    return this.http.put<Post>(url, post, httpOptions);
+  }
+
+  deletePost(post: Post | number): Observable<Post> {
+    const id = typeof post === 'number' ? post : post.id;
+    const url = `${this.postUrl}/${id}`;
+    return this.http.delete<Post>(url, httpOptions);
+  }
 
 }

@@ -42,10 +42,42 @@ export class PostComponent implements OnInit {
 
   editPost(post: Post) {
 
-     this.currentPost = post;
-     this.isEdit = true;
+    this.currentPost = post;
+    this.isEdit = true;
   }
 
+  updatedPost(post: Post) {
+
+    const updatedPostId = post.id;
+    this.posts.forEach((curr, index) => {
+
+      if (curr.id === updatedPostId) {
+        this.posts.splice(index, 1);
+        this.posts.unshift(post);
+        this.isEdit = false;
+      }
+    });
+
+  }
+
+  deletePost(post: Post) {
+
+    if (confirm('Are you sure to delete it ?')) {
+
+      this.postService.deletePost(post.id).subscribe(() => {
+
+        this.posts.forEach((curr, index) => {
+
+          if (curr.id === post.id) {
+            this.posts.splice(index, 1);
+          }
+        });
+
+      });
+
+    }
+
+  }
 
 
 }
